@@ -1,0 +1,18 @@
+.btn {
+  padding: 4px 12px;
+}
+.btn__update {
+  background: #bbdefb !important;
+  transition: color 0.2s;
+}
+.btn__update:hover {
+  background: #8aacc8 !important;
+}
+
+.btn__delete {
+  background-color: #f8bbd0 !important;
+  transition: color 0.2s;
+}
+.btn__delete:hover {
+  background: #c48b9f !important;
+}

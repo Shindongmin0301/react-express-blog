@@ -38,7 +38,7 @@ function Blog({ user, ...props }) {
           </Link>
         </Button>
         {post.map(li => {
-          return <PostList li={li} postIdx={li.post_idx} />;
+          return <PostList key={li.post_idx} li={li} postIdx={li.post_idx} />;
         })}
       </ListGroup>
     </div>

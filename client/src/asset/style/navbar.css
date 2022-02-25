@@ -1,3 +1,17 @@
-.custom__navbar {
-  width: 100vw;
+.navbar-container {
+  background: #e8eaf6;
+}
+
+.user__drop-menu button {
+  background-color: #7986cb;
+  border: none;
+  margin-top: 12px;
+}
+.user__drop-menu button:hover {
+  background-color: #49599a;
+}
+
+.user__drop-menu button:focus {
+  background-color: #49599a;
+  box-shadow: none;
 }

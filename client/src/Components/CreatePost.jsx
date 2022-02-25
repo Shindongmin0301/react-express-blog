@@ -6,6 +6,7 @@ function CreatePost({ user }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
+  const [authorIdx, setAuthorIdx] = useState(null);
   const navigate = useNavigate();
 
   function handleSubmit(e) {
@@ -15,6 +16,7 @@ function CreatePost({ user }) {
       title,
       content,
       author,
+      authorIdx,
     };
     fetch('/api/blog/create', {
       method: 'POST',

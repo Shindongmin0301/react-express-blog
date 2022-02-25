@@ -13,11 +13,12 @@ const ctrl = {
   },
   process: {
     checkAuth: (req, res) => {
-      if (req.user) {
-        res.json({ user: req.user.name });
-      } else {
-        res.redirect('/');
-      }
+      if (req.user)
+        res.json({
+          user: req.user.name,
+          userIdx: req.user.idx,
+        });
+      else res.redirect('/');
     },
     login: async (req, res) => {
       let user = new User(req.body);

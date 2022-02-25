@@ -16,10 +16,22 @@ const ctrl = {
   },
   process: {
     insertPost: async (req, res) => {
+      req.body.authorIdx = req.user.idx;
       const blog = new Blog(req.body);
       const response = await blog.insertPost();
-      console.log(response);
       return res.status(201).json(response);
+    },
+    updatePost: async (req, res) => {
+      const blog = new Blog(req.body);
+      const response = await blog.updatePost();
+      return res.status(201).json(response);
+    },
+    deletePost: async (req, res) => {
+      req.body.authorIdx = req.user.idx;
+      parseInt(req.body.postIdx);
+      const blog = new Blog(req.body);
+      const response = await blog.deletePost();
+      return res.status(301).json(response);
     },
   },
 };
