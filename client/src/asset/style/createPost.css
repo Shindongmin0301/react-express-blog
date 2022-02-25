@@ -1,0 +1,16 @@
+.create-container {
+  max-width: 600px !important;
+}
+
+.create-container input {
+  padding: 4px 8px;
+}
+.create-container textarea {
+  padding: 4px 8px;
+  resize: none;
+  height: 600px;
+}
+.create-container .btn__submit {
+  background-color: bisque;
+  margin-top: 12px;
+}

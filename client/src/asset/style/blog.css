@@ -1,0 +1,41 @@
+a {
+  text-decoration: none !important;
+}
+
+.post__title {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+.post__lists {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.post__list {
+  margin-top: 24px;
+  border: none !important;
+  border-bottom: 1px solid #bdbdbd !important;
+  padding-bottom: 0;
+}
+.link__detail {
+  text-decoration: none;
+  color: #4dd0e1;
+  transition: color 0.2s;
+}
+.post-info {
+  display: inline-block;
+  font-size: 0.8rem;
+}
+.post-info p {
+  margin-bottom: 0;
+  vertical-align: bottom;
+}
+.blog-container {
+  max-width: 1200px;
+  position: relative;
+}
+
+.btn__createPost {
+  position: absolute;
+  right: 0;
+  top: -30px;
+}
