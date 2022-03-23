@@ -1,0 +1,25 @@
+$color-pink: #f7e2e2;
+$color-turquoise: #61a4bc;
+
+.navbar-wrap {
+  background: $color-pink;
+  padding: 1rem !important;
+  .navbar-container {
+    display: flex;
+    width: 1000px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+  .navbar__logo {
+    color: $color-turquoise !important;
+  }
+
+  a {
+    color: $color-turquoise !important;
+
+    &:hover {
+      color: #5b7db1 !important;
+    }
+  }
+}

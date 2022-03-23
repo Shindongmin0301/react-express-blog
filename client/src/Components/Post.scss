@@ -1,0 +1,30 @@
+.content_wrap {
+  max-width: 800px !important;
+  padding: 1rem;
+  margin: 0 auto;
+
+  .content__title {
+    text-align: center;
+  }
+  .content__author {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  .content__date {
+    font-size: 0.8rem;
+    background: beige;
+    padding: 6px 8px;
+    border-radius: 12px;
+  }
+  .content__post-tag {
+    margin-right: 4px;
+    border-radius: 4px;
+    background: beige;
+    padding: 4px 12px;
+  }
+  .division-line {
+    height: 1px;
+    background-color: #bdbdbd;
+    margin-top: 20px;
+  }
+}

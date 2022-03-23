@@ -1,0 +1,62 @@
+@import './ColorVariable.scss';
+.login-wrap {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  .login-background {
+    background-color: white;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: 8rem;
+    padding-bottom: 5rem;
+    position: relative;
+  }
+  .login-heading {
+    padding-top: 4rem;
+  }
+  .login-form {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    input {
+      width: 100%;
+      border: 1px solid $color-pink;
+      border-radius: 8px;
+      padding: 4px 8px;
+      position: relative;
+      margin-bottom: 6px;
+      transition: 0.2s;
+
+      &:focus {
+        outline: none;
+        box-shadow: 2px 2px 8px $color-pink;
+      }
+    }
+
+    .btn__login {
+      background-color: $color-pink;
+      color: $color-turquoise;
+
+      &:hover {
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
+
+.btn__close-login {
+  position: absolute;
+  cursor: pointer;
+  top: 24px;
+  right: 24px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+}

@@ -1,0 +1,12 @@
+.card-wrap {
+  cursor: pointer;
+  transition: 0.1s;
+  &:hover {
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+}
