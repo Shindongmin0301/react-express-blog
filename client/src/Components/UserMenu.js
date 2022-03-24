@@ -4,9 +4,11 @@ import UserContext from '../contexts/UserContext';
 
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { CreatePostBtn } from './Buttons';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserMenu = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [dropMenu, setDropMenu] = useState(false);
 
   return (
@@ -22,12 +24,13 @@ const UserMenu = () => {
 
         <IoMdArrowDropdown className="usermenu__btn__open" />
       </div>
-      {dropMenu && <DropMenu setDropMenu={setDropMenu} />}
+      {dropMenu && <DropMenu setDropMenu={setDropMenu} setUser={setUser} user_id={user.user_id} />}
     </div>
   );
 };
 
-const DropMenu = ({ setDropMenu }) => {
+const DropMenu = ({ setDropMenu, setUser, user_id }) => {
+  const navigate = useNavigate();
   const wrapperRef = useRef();
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -39,6 +42,19 @@ const DropMenu = ({ setDropMenu }) => {
     else setDropMenu(true);
   };
 
+  const logout = () => {
+    axios({
+      method: 'post',
+      url: '/api/user/logout',
+      data: {
+        user_id,
+      },
+    });
+    document.cookie = '';
+    setUser(null);
+    navigate('/');
+  };
+
   return (
     <div className="position-relative" ref={wrapperRef}>
       <div className="dropmenu-wrap">
@@ -46,7 +62,7 @@ const DropMenu = ({ setDropMenu }) => {
           <ul>
             <li>내 게시글</li>
             <li>계정 설정</li>
-            <li>로그아웃</li>
+            <li onClick={logout}>로그아웃</li>
           </ul>
         </div>
       </div>

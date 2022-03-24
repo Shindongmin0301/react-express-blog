@@ -30,7 +30,7 @@ const LoginForm = ({ closeLoginForm }) => {
       },
     }).then(({ data }) => {
       if (data.success) {
-        setUser({ ...user, name: 'tester', user_id: 1 });
+        setUser(data.userInfo);
         closeLoginForm();
       } else return alert("That's not correct info");
     });

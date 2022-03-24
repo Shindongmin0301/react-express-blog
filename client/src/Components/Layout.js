@@ -10,7 +10,7 @@ import UserMenu from './UserMenu';
 import Login from '../pages/Login';
 
 const Layout = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [loginForm, setLoginForm] = useState(false);
   const closeLoginForm = () => setLoginForm(false);
@@ -28,7 +28,7 @@ const Layout = () => {
               <Nav.Link href="#pricing">Pricing</Nav.Link>
             </Nav>
             <Nav className="navbar__user-menu"></Nav>
-            {!user.name ? <LoginBtn showLoginForm={showLoginForm} /> : <UserMenu />}
+            {!user ? <LoginBtn showLoginForm={showLoginForm} /> : <UserMenu />}
           </div>
         </Navbar>
       </header>

@@ -1,18 +1,28 @@
 /* eslint-disable */
 import { useContext, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Layout from './Components/Layout';
 import PopularList from './pages/PopularList';
 import PostContent from './pages/PostContent';
 import Write from './pages/Write';
 import UserContext from './contexts/UserContext';
+import axios from 'axios';
 
 const App = () => {
-  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
   useEffect(() => {
-    // setUser({ ...user, name: 'dongmin', user_id: 1 });
+    axios({
+      method: 'get',
+      url: '/api/user/auth',
+    }).then(({ data }) => {
+      if (data.userInfo) {
+        setUser({ ...user, name: data.userInfo.name, user_id: data.userInfo.user_id });
+      }
+    });
   }, []);
 
   return (
