@@ -8,7 +8,7 @@ const checkToken = async (req, res, next) => {
   const refreshToken = req.cookies.refresh;
 
   // 토큰이 없을때
-  if (!refreshToken) return res.json({ success: false, message: 'Login please' });
+  if (!refreshToken && !accessToken) return res.json({ success: false, message: 'Login please' });
   // access토큰이 만료됬을때
   if (!accessToken) {
     const refreshTokenRecord = await UserStorage.selectTokenAndUserinfo(refreshToken);

@@ -17,7 +17,6 @@ const loginCtrl = {
           name: req.user.name,
           user_id: req.user.user_id,
         };
-        console.log(userInfo);
         res.json({ success: true, userInfo });
       }
     },

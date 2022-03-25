@@ -4,9 +4,7 @@ import { PostProvider } from '../contexts/PostContext';
 const Popular = () => {
   return (
     <div>
-      <PostProvider>
-        <PopluarPost />
-      </PostProvider>
+      <PopluarPost />
     </div>
   );
 };

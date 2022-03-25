@@ -12,4 +12,6 @@ router.post('/login', loginCtrl.process.login);
 router.post('/post/create', postCtrl.process.createPost);
 router.post('/user/logout', loginCtrl.process.logout);
 
+router.delete('/post/delete', checkToken, postCtrl.process.deletePost);
+router.put('/post/update', checkToken, postCtrl.process.updatePost);
 module.exports = router;

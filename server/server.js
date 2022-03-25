@@ -10,9 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api', router);
 
-app.get('/api/write', (req, res) => {
-  console.log('123123');
-});
 app.listen(PORT, () => {
   console.log('Listening on ' + PORT);
 });

@@ -28,6 +28,26 @@ class PostStorage {
       });
     });
   }
+
+  static deletePost({ postAuthor, postId }) {
+    return new Promise((resolve, reject) => {
+      let sql = 'DELETE FROM posts WHERE post_id=? AND author=?';
+      db.query(sql, [postId, postAuthor], (err, data) => {
+        if (err) reject(err);
+        else resolve(data);
+      });
+    });
+  }
+
+  static updatePost({ title, content, author, postId }) {
+    return new Promise((resolve, reject) => {
+      let sql = 'UPDATE posts SET title=?, content=?, author=? WHERE post_id=?';
+      db.query(sql, [title, content, author, postId], (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  }
 }
 
 module.exports = PostStorage;

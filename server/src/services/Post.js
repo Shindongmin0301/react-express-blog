@@ -33,6 +33,27 @@ class Post {
       return e;
     }
   }
+
+  async deletePost() {
+    const body = this.body;
+    try {
+      const deleteResult = await PostStorage.deletePost(body);
+      if (deleteResult.affectedRows == 1) return { success: true, message: 'delete success' };
+    } catch (e) {
+      return e;
+    }
+  }
+
+  async updatePost() {
+    const body = this.body;
+    try {
+      const updateResult = await PostStorage.updatePost(body);
+      if (updateResult.affectedRows == 1) return { success: true, message: 'Update success' };
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+  }
 }
 
 module.exports = Post;

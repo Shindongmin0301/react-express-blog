@@ -2,13 +2,17 @@
   max-width: 800px !important;
   padding: 1rem;
   margin: 0 auto;
-
+  position: relative;
   .content__title {
     text-align: center;
   }
   .content__author {
     display: inline-block;
     margin-right: 1rem;
+  }
+  .content__post-info {
+    display: flex;
+    justify-content: space-between;
   }
   .content__date {
     font-size: 0.8rem;

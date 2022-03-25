@@ -1,11 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 
-import ContentInput from '../Components/Write/ContentInput';
-import TitleInput from '../Components/Write/TitleInput';
 import { WriteSubmitBtn } from '../Components/Buttons';
 import axios from 'axios';
 import UserContext from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import CreateContent from '../Components/POST/CreateContent';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -44,8 +43,7 @@ const Write = () => {
   return (
     <>
       <div className="page-container">
-        <TitleInput setValue={onChange} />
-        <ContentInput setValue={onChange} />
+        <CreateContent setValue={onChange} />
         <WriteSubmitBtn submitPost={submitPost} />
       </div>
     </>
