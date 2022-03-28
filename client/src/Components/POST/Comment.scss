@@ -1,0 +1,17 @@
+@import '../ColorVariable.scss';
+
+.comment_username {
+  font-size: 1.1rem;
+}
+.comment__date {
+  font-size: 0.9rem;
+  color: #9e9e9e;
+}
+.comment-reply {
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: $color-turquoise;
+}
+.comment__input {
+  margin-bottom: 7rem;
+}
