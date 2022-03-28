@@ -14,8 +14,10 @@ const PostContainer = styled.div`
 const PostContent = () => {
   return (
     <PostContainer>
-      <Post />
-      <Comment />
+      <div>
+        <Post />
+        <Comment />
+      </div>
     </PostContainer>
   );
 };

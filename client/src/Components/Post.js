@@ -27,7 +27,7 @@ const Post = () => {
     fetchData();
   }, [postId]);
 
-  if (loading) return false;
+  if (loading) return null;
   if (!post) return null;
 
   return (

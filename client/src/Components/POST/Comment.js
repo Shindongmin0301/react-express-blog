@@ -43,6 +43,27 @@ const Button = styled.button`
 `;
 
 const Comment = () => {
+  const CommentDb = [
+    {
+      comment_id: 1,
+      post_id: 1,
+      date: new Date(),
+      commentContent: '와 너무 유익해요!',
+    },
+    {
+      comment_id: 2,
+      post_id: 1,
+      date: new Date(),
+      commentContent: '와 너무 유익해요!',
+    },
+    {
+      comment_id: 3,
+      post_id: 1,
+      date: new Date(),
+      commentContent: '와 너무 유익해요!',
+    },
+  ];
+
   return (
     <CommnetWrap>
       <div className="position-relative comment__input">
@@ -60,6 +81,10 @@ const Comment = () => {
 };
 
 const CommentList = () => {
+  const handleClick = () => {
+    console.log('clicked!');
+  };
+
   return (
     <ul className="list-unstyled">
       <li>
@@ -71,7 +96,7 @@ const CommentList = () => {
           </div>
         </div>
         <p className="">와 너무 유익했어요!!</p>
-        <div className="comment-reply">
+        <div className="comment-reply" onClick={handleClick}>
           <IoMdArrowDropdown />
           답글 보기
         </div>
