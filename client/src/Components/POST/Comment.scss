@@ -8,10 +8,16 @@
   color: #9e9e9e;
 }
 .comment-reply {
-  cursor: pointer;
   font-size: 0.9rem;
-  color: $color-turquoise;
+  .btn__show-replys {
+    cursor: pointer;
+    display: inline-block;
+    color: $color-turquoise;
+  }
 }
 .comment__input {
   margin-bottom: 7rem;
+}
+.comment__hr {
+  color: #bdbdbd;
 }

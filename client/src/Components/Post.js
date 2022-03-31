@@ -1,35 +1,8 @@
 import './Post.scss';
-import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
 
-import axios from 'axios';
-import UserContext from '../contexts/UserContext';
 import PostOptions from './PostOptions';
 
-const Post = () => {
-  const { user } = useContext(UserContext);
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(null);
-  const postId = useParams().id;
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get('/api/post-one', {
-        params: { postId },
-      });
-      setLoading(true);
-      try {
-        setPost(response.data);
-        setLoading(false);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, [postId]);
-
-  if (loading) return null;
-  if (!post) return null;
-
+const Post = ({ post, user }) => {
   return (
     <>
       <div className="content_wrap mt-5">

@@ -1,6 +1,9 @@
-import styled from 'styled-components';
-import { IoMdArrowDropdown } from 'react-icons/io';
 import './Comment.scss';
+import React, { useState, useMemo } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import timeDiffCalc from '../../lib/timeDiffCalc';
+import { useParams } from 'react-router-dom';
 
 const Img = styled.img`
   width: 54px;
@@ -42,67 +45,69 @@ const Button = styled.button`
   }
 `;
 
-const Comment = () => {
-  const CommentDb = [
-    {
-      comment_id: 1,
-      post_id: 1,
-      date: new Date(),
-      commentContent: '와 너무 유익해요!',
-    },
-    {
-      comment_id: 2,
-      post_id: 1,
-      date: new Date(),
-      commentContent: '와 너무 유익해요!',
-    },
-    {
-      comment_id: 3,
-      post_id: 1,
-      date: new Date(),
-      commentContent: '와 너무 유익해요!',
-    },
-  ];
+const Comment = ({ comments, setComments }) => {
+  const postId = useParams().id;
+  const [commentInput, setCommentInput] = useState('');
+  const [commentsLength] = useState(comments.length);
+
+  const onSubmit = e => {
+    e.preventDefault();
+    axios({
+      url: '/api/comment/add',
+      method: 'POST',
+      data: {
+        commentInput,
+        postId,
+      },
+    }).then(({ data }) => {
+      if (data.success) {
+        axios.get('/api/comment', { params: { postId } }).then(({ data }) => {
+          setComments(data);
+          setCommentInput('');
+        });
+      }
+    });
+  };
 
   return (
     <CommnetWrap>
       <div className="position-relative comment__input">
-        <div>0개의 댓글</div>
-        <Textarea placeholder="댓글을 입력해 보세요."></Textarea>
-        <Button>댓글달기</Button>
+        <div>{commentsLength}개의 댓글</div>
+        <form onSubmit={onSubmit}>
+          <Textarea
+            placeholder="댓글을 입력해 보세요."
+            value={commentInput}
+            onChange={e => setCommentInput(e.target.value)}
+          ></Textarea>
+          <Button>댓글달기</Button>
+        </form>
       </div>
-      <CommentList />
-      <CommentList />
-      <CommentList />
-      <CommentList />
-      <CommentList />
+      <ul className="list-unstyled">
+        {comments.map(comment => (
+          <CommentItem key={comment.comment_id} comment={comment} />
+        ))}
+      </ul>
     </CommnetWrap>
   );
 };
 
-const CommentList = () => {
-  const handleClick = () => {
-    console.log('clicked!');
-  };
-
+const CommentItem = ({ comment }) => {
+  const date = new Date(comment.date);
+  const commentDate = timeDiffCalc(date);
   return (
-    <ul className="list-unstyled">
+    <>
       <li>
         <div className="comment__top">
           <Img className="userprofile__image" src="/images/profile.jpg" />
           <div>
-            <p className="m-0 comment_username">username</p>
-            <p className="comment__date">2022-03-27</p>
+            <p className="m-0 comment_username">{comment.user_id}</p>
+            <p className="comment__date">{commentDate}</p>
           </div>
         </div>
-        <p className="">와 너무 유익했어요!!</p>
-        <div className="comment-reply" onClick={handleClick}>
-          <IoMdArrowDropdown />
-          답글 보기
-        </div>
+        <p className="">{comment.content}</p>
       </li>
-      <hr />
-    </ul>
+      <hr className="comment__hr" />
+    </>
   );
 };
 

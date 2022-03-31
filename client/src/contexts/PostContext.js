@@ -1,24 +1,19 @@
 import { createContext, useState } from 'react';
 
 const PostContext = createContext({
-  state: [
-    {
-      post_id: 0,
-      title: 'title',
-      content: 'content',
-      author: 0,
-    },
-  ],
+  state: [],
   actions: {
     setPosts: () => {},
+    setComments: () => {},
   },
 });
 
 const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
   const value = {
-    state: { posts },
-    actions: { setPosts },
+    state: { posts, comments },
+    actions: { setPosts, setComments },
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
