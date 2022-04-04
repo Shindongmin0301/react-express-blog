@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
-import produce from 'immer';
 
 import { Button } from '../Components/common/Button';
 import Input from '../Components/common/Input';
 import palette from '../lib/styles';
+import registerReducer from '../reducer/registerRecuer';
+import checkRegExp from '../lib/checkRegExp';
 
 const StyledRegisterBlock = styled.div`
   width: 400px;
@@ -41,7 +42,7 @@ const HelpMessage = styled.span`
 `;
 
 const Register = () => {
-  const [inputs, setInputs] = useState([
+  const [inputs, dispatch] = useReducer(registerReducer, [
     {
       name: 'id',
       type: 'text',
@@ -75,66 +76,28 @@ const Register = () => {
       isPass: false,
     },
   ]);
-
   const [id, password, confirmPassword, nickname] = inputs;
-
-  const message = {
-    idAlreayExist: '이미 존재하는 아이디입니다.',
-    idLengthErr: '아이디는 6~30자 안으로 정해주세요.',
-    confirmPasswordErr: '비밀번호가 서로 달라요. 다시 확인 해주세요.',
-    passwordLengthErr: '비밀번호는 8~30자 안으로 정해주세요.',
-    nickAlreadyExist: '닉네임은 2~8자 안으로 정해주세요.',
-    emptyInputErr: '빈칸을 채워주세요.',
-  };
-
-  const onChange = e => {
-    setInputs(
-      produce(draft => {
-        draft.forEach(el => {
-          if (el.name === e.target.name) {
-            el.value = e.target.value;
-          }
-        });
-      }),
-    );
-  };
 
   const onSubmit = e => {
     e.preventDefault();
-    // helpMessage 초기화
-    setInputs(
-      produce(draft => {
-        draft.forEach(input => {
-          input.helpMessage = null;
-        });
-      }),
-    );
 
-    // 빈칸 에러
-    if (!id || !password || !confirmPassword || !nickname) {
-      setInputs(
-        produce(draft => {
-          draft.forEach(el => {
-            if (el.value === '') el.helpMessage = message.emptyInputErr;
-          });
-        }),
-      );
-    }
-
-    // password 확인 에러
-    if (password.value !== confirmPassword.value) {
-      setInputs(
-        produce(draft => {
-          draft.forEach(input => {
-            if (input.name === 'password' || input.name === 'confirmPassword') {
-            }
-          });
-        }),
-      );
-    }
+    let emptyIndex = [];
+    inputs.forEach((el, i) => {
+      if (el.value === '') emptyIndex.push(i);
+    });
+    const checkPassword =
+      password.value === confirmPassword.value && password.value !== '' && confirmPassword.value !== '';
+    const regExp = checkRegExp(id.value, password.value, nickname.value);
+    // regExp
+    // regExp
+    // regExp
+    // regExp
+    // regExp
+    // regExp
+    dispatch({ type: 'onSubmit', emptyIndex, checkPassword, regExp });
   };
-  console.log(inputs);
 
+  console.log(inputs);
   return (
     <StyledRegisterBlock className="page-container">
       <StyledHeading>Register</StyledHeading>
@@ -149,7 +112,10 @@ const Register = () => {
                 type={type}
                 placeholder={placeholder}
                 value={value}
-                onChange={onChange}
+                onChange={e => {
+                  const { name, value } = e.target;
+                  dispatch({ type: 'onChange', name, value });
+                }}
                 helpMessage={helpMessage}
                 isPass={isPass}
               />
@@ -157,6 +123,7 @@ const Register = () => {
             </div>
           );
         })}
+
         <StyledButton>회원가입</StyledButton>
       </StyledForm>
     </StyledRegisterBlock>
