@@ -12,7 +12,10 @@ $color-turquoise: #61a4bc;
     margin: 0 auto;
   }
   .navbar__logo {
+    cursor: pointer;
     color: $color-turquoise !important;
+    margin-right: 1rem;
+    font-size: 1.2rem;
   }
 
   a {

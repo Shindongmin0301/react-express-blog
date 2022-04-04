@@ -91,7 +91,7 @@ const Comment = ({ comments, setComments }) => {
   );
 };
 
-const CommentItem = ({ comment }) => {
+const CommentItem = React.memo(({ comment }) => {
   const date = new Date(comment.date);
   const commentDate = timeDiffCalc(date);
   return (
@@ -109,6 +109,6 @@ const CommentItem = ({ comment }) => {
       <hr className="comment__hr" />
     </>
   );
-};
+});
 
 export default Comment;

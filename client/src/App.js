@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { useContext, useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { PostProvider } from './contexts/PostContext';
 import axios from 'axios';
 
 import Layout from './Components/Layout';
@@ -9,13 +10,11 @@ import PostContent from './pages/PostContent';
 import Write from './pages/Write';
 import Update from './pages/Update';
 import UserContext from './contexts/UserContext';
-import { PostProvider } from './contexts/PostContext';
+import Register from './pages/Register';
 
 const App = () => {
-  const navigate = useNavigate();
-
   const { user, setUser } = useContext(UserContext);
-  console.log(user);
+  const { pathname } = useLocation();
   useEffect(() => {
     axios({
       method: 'get',
@@ -25,7 +24,7 @@ const App = () => {
         setUser({ ...user, name: data.userInfo.name, user_id: data.userInfo.user_id });
       }
     });
-  }, []);
+  }, [pathname]);
 
   return (
     <div>
@@ -36,6 +35,7 @@ const App = () => {
             <Route path="/post-content/:id" element={<PostContent />} />
             <Route path="/post/write" element={<Write />} />
             <Route path="/post/update/:id" element={<Update />} />
+            <Route path="/register" element={<Register />} />
           </Route>
         </Routes>
       </PostProvider>

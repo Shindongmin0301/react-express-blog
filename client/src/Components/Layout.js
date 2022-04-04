@@ -1,6 +1,6 @@
 import './Layout.scss';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useContext, useState, useEffect } from 'react';
 import UserContext from '../contexts/UserContext';
@@ -10,6 +10,7 @@ import UserMenu from './UserMenu';
 import Login from '../pages/Login';
 
 const Layout = () => {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
   const [loginForm, setLoginForm] = useState(false);
@@ -20,9 +21,9 @@ const Layout = () => {
       <header>
         <Navbar className="navbar-wrap">
           <div className="page-container navbar-container">
-            <Navbar.Brand href="/" className="navbar__logo">
+            <div className="navbar__logo" onClick={() => navigate('/')}>
               React Blog
-            </Navbar.Brand>
+            </div>
             <Nav className="me-auto">
               <Nav.Link href="#">Blog</Nav.Link>
               <Nav.Link href="#pricing">Pricing</Nav.Link>

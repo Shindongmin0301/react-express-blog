@@ -4,6 +4,7 @@ import { CgClose } from 'react-icons/cg';
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import UserContext from '../contexts/UserContext';
+import { Button } from './common/Button';
 
 const LoginForm = ({ closeLoginForm }) => {
   const { user, setUser } = useContext(UserContext);
@@ -51,6 +52,7 @@ const LoginForm = ({ closeLoginForm }) => {
             </div>
 
             <button className="btn btn__login">Login</button>
+            <Button>Register</Button>
           </form>
         </div>
       </div>
