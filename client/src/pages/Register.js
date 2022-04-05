@@ -5,7 +5,7 @@ import { Button } from '../Components/common/Button';
 import Input from '../Components/common/Input';
 import palette from '../lib/styles';
 import registerReducer from '../reducer/registerRecuer';
-import checkRegExp from '../lib/checkRegExp';
+import { BsCheckLg } from 'react-icons/bs';
 
 const StyledRegisterBlock = styled.div`
   width: 400px;
@@ -31,6 +31,7 @@ const StyledForm = styled.form`
 `;
 
 const StyledInput = styled(Input)`
+  width: 100%;
   // pass되지 않은 input 경고
   border-bottom: ${({ helpMessage }) => (helpMessage ? '2px solid ' + palette.redColor.warning : '1px solid black')};
 `;
@@ -41,9 +42,16 @@ const HelpMessage = styled.span`
   font-size: 0.8rem;
 `;
 
+const StyledBsCheckLg = styled(BsCheckLg)`
+  position: absolute;
+  right: 1rem;
+  top: 1.2rem;
+  color: ${palette.greenColor.pass};
+`;
+
 const Register = () => {
-  const [inputs, dispatch] = useReducer(registerReducer, [
-    {
+  const [inputs, dispatch] = useReducer(registerReducer, {
+    id: {
       name: 'id',
       type: 'text',
       placeholder: '아이디',
@@ -51,7 +59,7 @@ const Register = () => {
       helpMessage: null,
       isPass: false,
     },
-    {
+    password: {
       name: 'password',
       type: 'password',
       placeholder: '비밀번호',
@@ -59,7 +67,7 @@ const Register = () => {
       helpMessage: null,
       isPass: false,
     },
-    {
+    confirmPassword: {
       name: 'confirmPassword',
       type: 'password',
       placeholder: '비밀번호 확인',
@@ -67,7 +75,7 @@ const Register = () => {
       helpMessage: null,
       isPass: false,
     },
-    {
+    nickname: {
       name: 'nickname',
       type: 'text',
       placeholder: '닉네임',
@@ -75,55 +83,44 @@ const Register = () => {
       helpMessage: null,
       isPass: false,
     },
-  ]);
-  const [id, password, confirmPassword, nickname] = inputs;
+  });
+  const { id, password, confirmPassword, nickname } = inputs;
+
+  const onChange = e => {
+    const { name, value } = e.target;
+    dispatch({ type: 'onChange', name, value });
+  };
 
   const onSubmit = e => {
     e.preventDefault();
-
-    let emptyIndex = [];
-    inputs.forEach((el, i) => {
-      if (el.value === '') emptyIndex.push(i);
-    });
-    const checkPassword =
-      password.value === confirmPassword.value && password.value !== '' && confirmPassword.value !== '';
-    const regExp = checkRegExp(id.value, password.value, nickname.value);
-    // regExp
-    // regExp
-    // regExp
-    // regExp
-    // regExp
-    // regExp
-    dispatch({ type: 'onSubmit', emptyIndex, checkPassword, regExp });
+    console.log(inputs);
+    if (!id.isPass || !password.isPass || !confirmPassword.isPass || !nickname.isPass) {
+      alert('서식을 알맞게 입력해주세요.');
+    }
   };
-
   console.log(inputs);
   return (
     <StyledRegisterBlock className="page-container">
       <StyledHeading>Register</StyledHeading>
       <StyledForm onSubmit={onSubmit}>
-        {inputs.map(props => {
-          const { name, type, placeholder, value, helpMessage, isPass } = props;
-
+        {Object.keys(inputs).map(key => {
+          const { name, type, placeholder, value, helpMessage, isPass } = inputs[key];
           return (
-            <div className="d-flex flex-column" key={name}>
+            <div key={name} className="position-relative">
               <StyledInput
                 name={name}
                 type={type}
                 placeholder={placeholder}
                 value={value}
-                onChange={e => {
-                  const { name, value } = e.target;
-                  dispatch({ type: 'onChange', name, value });
-                }}
                 helpMessage={helpMessage}
                 isPass={isPass}
+                onChange={onChange}
               />
+              {isPass && <StyledBsCheckLg />}
               {helpMessage && <HelpMessage>{helpMessage}</HelpMessage>}
             </div>
           );
         })}
-
         <StyledButton>회원가입</StyledButton>
       </StyledForm>
     </StyledRegisterBlock>

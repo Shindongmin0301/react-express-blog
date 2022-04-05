@@ -6,5 +6,8 @@ const palette = {
   redColor: {
     warning: '#DB4455',
   },
+  greenColor: {
+    pass: '#00e676',
+  },
 };
 export default palette;
