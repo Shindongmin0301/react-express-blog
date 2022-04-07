@@ -31,9 +31,9 @@ const createToken = {
     });
   },
 
-  createAccessToken: (name, user_id) => {
+  createAccessToken: (nickname, user_id) => {
     return new Promise((resolve, reject) => {
-      const accessToken = jwt.sign({ name, user_id }, process.env.SECRET_ACCESS_TOKEN, {
+      const accessToken = jwt.sign({ nickname, user_id }, process.env.SECRET_ACCESS_TOKEN, {
         expiresIn: '15m',
         issuer: 'express-blog',
       });

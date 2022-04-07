@@ -10,7 +10,7 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ className, onChange, placeholder, type, name }) => {
+const Input = ({ className, onChange, placeholder, type, name, onBlur }) => {
   return (
     <StyledInput
       autoComplete="off"
@@ -19,6 +19,7 @@ const Input = ({ className, onChange, placeholder, type, name }) => {
       onChange={onChange}
       type={type}
       placeholder={placeholder}
+      onBlur={onBlur}
     />
   );
 };

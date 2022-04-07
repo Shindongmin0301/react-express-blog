@@ -95,19 +95,17 @@ const CommentItem = React.memo(({ comment }) => {
   const date = new Date(comment.date);
   const commentDate = timeDiffCalc(date);
   return (
-    <>
-      <li>
-        <div className="comment__top">
-          <Img className="userprofile__image" src="/images/profile.jpg" />
-          <div>
-            <p className="m-0 comment_username">{comment.user_id}</p>
-            <p className="comment__date">{commentDate}</p>
-          </div>
+    <li>
+      <div className="comment__top">
+        <Img className="userprofile__image" src="/images/profile.jpg" />
+        <div>
+          <p className="m-0 comment_username">{comment.nickname}</p>
+          <p className="comment__date">{commentDate}</p>
         </div>
-        <p className="">{comment.content}</p>
-      </li>
+      </div>
+      <p className="">{comment.content}</p>
       <hr className="comment__hr" />
-    </>
+    </li>
   );
 });
 

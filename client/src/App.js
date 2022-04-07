@@ -21,7 +21,8 @@ const App = () => {
       url: '/api/user/auth',
     }).then(({ data }) => {
       if (data.userInfo) {
-        setUser({ ...user, name: data.userInfo.name, user_id: data.userInfo.user_id });
+        console.log(data);
+        setUser({ ...user, nickname: data.userInfo.nickname, user_id: data.userInfo.user_id });
       }
     });
   }, [pathname]);

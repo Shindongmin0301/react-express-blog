@@ -24,10 +24,6 @@ const Layout = () => {
             <div className="navbar__logo" onClick={() => navigate('/')}>
               React Blog
             </div>
-            <Nav className="me-auto">
-              <Nav.Link href="#">Blog</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
-            </Nav>
             <Nav className="navbar__user-menu"></Nav>
             {!user ? <LoginBtn showLoginForm={showLoginForm} /> : <UserMenu />}
           </div>

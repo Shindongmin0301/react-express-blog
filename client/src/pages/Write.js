@@ -30,15 +30,17 @@ const Write = () => {
       url: '/api/post/create',
       data: { title, content, author },
     }).then(({ data }) => {
-      console.log(data);
       if (data.success) navigate(`/post-content/${data.insertId}`);
       else console.log(data);
     });
   };
   useEffect(() => {
-    if (!user) navigate('/');
+    if (!user) {
+      alert('잘못된 접근입니다.');
+      return navigate('/');
+    }
     setAuthor(user.user_id);
-  }, [user]);
+  }, []);
 
   return (
     <>

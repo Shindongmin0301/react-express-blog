@@ -15,11 +15,11 @@ const checkToken = async (req, res, next) => {
     // 새로운 access토큰 발급
     if (refreshToken === refreshTokenRecord.token) {
       console.log('새로운 토큰 발급');
-      const { user_id, name } = refreshTokenRecord;
-      const newAccessToken = await createToken.createAccessToken(name, user_id);
+      const { user_id, nickname } = refreshTokenRecord;
+      const newAccessToken = await createToken.createAccessToken(nickname, user_id);
       res.cookie('user', newAccessToken, { httpOnly: true, maxAge: 1000 * 60 * 15 });
       const userInfo = {
-        name,
+        nickname,
         user_id,
       };
       return res.json({ success: true, message: 'issued new access token', userInfo });

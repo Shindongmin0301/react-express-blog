@@ -44,7 +44,16 @@
     .btn__login {
       background-color: $color-pink;
       color: $color-turquoise;
+      flex: 1;
+      &:hover {
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+      }
+    }
 
+    .btn__register {
+      background-color: $color-turquoise;
+      color: $color-pink;
+      flex: 1;
       &:hover {
         box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
       }

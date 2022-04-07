@@ -13,16 +13,17 @@ const UserMenu = () => {
 
   return (
     <div>
-      <div
-        className="usermenu-wrap "
-        onClick={() => {
-          setDropMenu(!dropMenu);
-        }}
-      >
+      <div className="usermenu-wrap ">
         <CreatePostBtn />
-        <p className="m-0 me-2">{user.name}</p>
-
-        <IoMdArrowDropdown className="usermenu__btn__open" />
+        <div
+          className="d-flex align-items-center"
+          onClick={() => {
+            setDropMenu(!dropMenu);
+          }}
+        >
+          <p className="m-0 me-2">{user.nickname}</p>
+          <IoMdArrowDropdown className="usermenu__btn__open" />
+        </div>
       </div>
       {dropMenu && <DropMenu setDropMenu={setDropMenu} setUser={setUser} user_id={user.user_id} />}
     </div>
@@ -32,11 +33,13 @@ const UserMenu = () => {
 const DropMenu = ({ setDropMenu, setUser, user_id }) => {
   const navigate = useNavigate();
   const wrapperRef = useRef();
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
 
+  useEffect(() => {
+    // 드롭메뉴 바깥 클릭시 닫기
+    document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   });
+
   const handleClickOutside = e => {
     if (wrapperRef && !wrapperRef.current.contains(e.target)) setDropMenu(false);
     else setDropMenu(true);

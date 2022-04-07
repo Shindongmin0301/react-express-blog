@@ -13,8 +13,22 @@ class CommentStorage {
 
   static select(id) {
     return new Promise((resolve, reject) => {
-      let sql = 'SELECT * FROM comments WHERE post_id=?';
+      let sql = `
+      SELECT 
+          comments.comment_id,
+          comments.post_id,
+          comments.date,
+          comments.content,
+          comments.user_id,
+          users.nickname
+      FROM
+          comments
+              JOIN
+          users ON users.user_id = comments.user_id
+            AND comments.post_id = ?;
+      `;
       db.query(sql, [id], (err, data) => {
+        console.log(data);
         if (err) reject(err);
         else resolve(data);
       });

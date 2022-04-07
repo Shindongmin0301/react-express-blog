@@ -1,10 +1,10 @@
 const db = require('../config/db');
 
 class UserStorage {
-  static getUserRecord(email) {
+  static getUserRecord(id) {
     return new Promise((resolve, reject) => {
-      let sql = 'SELECT * FROM users WHERE email=?';
-      db.query(sql, [email], (err, data) => {
+      let sql = 'SELECT * FROM users WHERE id=?';
+      db.query(sql, [id], (err, data) => {
         if (err) reject(err);
         else resolve(data[0]);
       });
@@ -35,13 +35,44 @@ class UserStorage {
     return new Promise((resolve, reject) => {
       let sql = `
         SELECT 
-          users.name, authToken.token, authToken.user_id
+          users.nickname, authToken.token, authToken.user_id
         FROM
           authToken
             JOIN
           users ON authToken.token = ?;
         `;
       db.query(sql, [token], (err, data) => {
+        if (err) reject(err);
+        else resolve(data[0]);
+      });
+    });
+  }
+
+  static insertUser({ id, password, nickname }) {
+    console.log(id, password, nickname);
+    return new Promise((resolve, reject) => {
+      let sql = `INSERT INTO users (id, password, nickname) VALUES (?,?,?);`;
+      db.query(sql, [id, password, nickname], (err, data) => {
+        if (err) reject(err);
+        else resolve(data);
+      });
+    });
+  }
+
+  static selectId({ id }) {
+    return new Promise((resolve, reject) => {
+      let sql = 'SELECT users.id FROM users WHERE id=?';
+      db.query(sql, [id], (err, data) => {
+        if (err) reject(err);
+        else resolve(data[0]);
+      });
+    });
+  }
+
+  static selectNickname({ nickname }) {
+    return new Promise((resolve, reject) => {
+      let sql = 'SELECT users.nickname FROM users WHERE nickname=?';
+      db.query(sql, [nickname], (err, data) => {
         if (err) reject(err);
         else resolve(data[0]);
       });

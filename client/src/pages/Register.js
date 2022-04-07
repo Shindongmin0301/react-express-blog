@@ -1,11 +1,14 @@
 import { useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 
+import axios from 'axios';
 import { Button } from '../Components/common/Button';
 import Input from '../Components/common/Input';
 import palette from '../lib/styles';
 import registerReducer from '../reducer/registerRecuer';
 import { BsCheckLg } from 'react-icons/bs';
+import produce from 'immer';
+import { useNavigate } from 'react-router-dom';
 
 const StyledRegisterBlock = styled.div`
   width: 400px;
@@ -50,6 +53,7 @@ const StyledBsCheckLg = styled(BsCheckLg)`
 `;
 
 const Register = () => {
+  const navigate = useNavigate();
   const [inputs, dispatch] = useReducer(registerReducer, {
     id: {
       name: 'id',
@@ -86,6 +90,37 @@ const Register = () => {
   });
   const { id, password, confirmPassword, nickname } = inputs;
 
+  const isExistId = id => {
+    if (id.isPass) {
+      axios({
+        method: 'POST',
+        url: '/api/user/findId',
+        data: { id: id.value },
+      })
+        .then(({ data }) => {
+          if (!data.success) {
+            dispatch({ type: 'AlreadyExistId' });
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  };
+  const isExistNickname = nickname => {
+    if (nickname.isPass) {
+      axios({
+        method: 'POST',
+        url: '/api/user/find-nickname',
+        data: { nickname: nickname.value },
+      }).then(({ data }) => {
+        if (!data.success) {
+          dispatch({ type: 'AlreadyExistNickname' });
+        }
+      });
+    }
+  };
+
   const onChange = e => {
     const { name, value } = e.target;
     dispatch({ type: 'onChange', name, value });
@@ -93,12 +128,26 @@ const Register = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(inputs);
     if (!id.isPass || !password.isPass || !confirmPassword.isPass || !nickname.isPass) {
       alert('서식을 알맞게 입력해주세요.');
     }
+    axios({
+      method: 'POST',
+      url: '/api/user/register',
+      data: {
+        id: id.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+        nickname: nickname.value,
+      },
+    }).then(({ data }) => {
+      if (data.success) {
+        alert('회원가입 되었습니다. 홈화면에서 로그인 해주세요.');
+        navigate('/');
+      }
+    });
   };
-  console.log(inputs);
+
   return (
     <StyledRegisterBlock className="page-container">
       <StyledHeading>Register</StyledHeading>
@@ -115,8 +164,15 @@ const Register = () => {
                 helpMessage={helpMessage}
                 isPass={isPass}
                 onChange={onChange}
+                onBlur={
+                  name === 'id'
+                    ? () => isExistId(id)
+                    : null || name === 'nickname'
+                    ? () => isExistNickname(nickname)
+                    : null
+                }
               />
-              {isPass && <StyledBsCheckLg />}
+              {isPass && !helpMessage && <StyledBsCheckLg />}
               {helpMessage && <HelpMessage>{helpMessage}</HelpMessage>}
             </div>
           );

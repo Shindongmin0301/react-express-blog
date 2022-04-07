@@ -5,26 +5,6 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import PostContext from '../contexts/PostContext';
 
-const PopularPostItem = ({ id, title, content, author }) => {
-  const navigate = useNavigate();
-  const onClick = id => {
-    navigate(`/post-content/${id}`);
-  };
-
-  return (
-    <div className="col-lg-4 col-sm-6">
-      <Card className="mb-3 card-wrap" onClick={() => onClick(id)}>
-        <Card.Img variant="top" src={'images/post-default-image.png'} />
-        <Card.Body>
-          <Card.Title className="text-center card-title">{title}</Card.Title>
-          <Card.Text className="text-center">{}</Card.Text>
-          <Card.Text className="text-center">작성자: {author}</Card.Text>
-        </Card.Body>
-      </Card>
-    </div>
-  );
-};
-
 const PopularPost = () => {
   const { state, actions } = useContext(PostContext);
   const [loading, setLoading] = useState(false);
@@ -58,11 +38,32 @@ const PopularPost = () => {
                 title={post.title}
                 content={post.content}
                 author={post.author}
+                nickname={post.nickname}
               />
             );
           })}
         </div>
       </div>
+    </div>
+  );
+};
+
+const PopularPostItem = ({ id, title, nickname, author }) => {
+  const navigate = useNavigate();
+  const onClick = id => {
+    navigate(`/post-content/${id}`);
+  };
+
+  return (
+    <div className="col-lg-4 col-sm-6">
+      <Card className="mb-3 card-wrap" onClick={() => onClick(id)}>
+        <Card.Img variant="top" src={'images/post-default-image.png'} />
+        <Card.Body>
+          <Card.Title className="text-center card-title">{title}</Card.Title>
+          <Card.Text className="text-center">{}</Card.Text>
+          <Card.Text className="text-center">작성자: {nickname}</Card.Text>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

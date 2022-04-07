@@ -53,37 +53,6 @@ const PostContent = () => {
     fetchComment();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     const response = await axios.get('/api/post-one', {
-  //       params: { postId },
-  //     });
-  //     setLoading(true);
-  //     try {
-  //       actions.setPosts(response.data);
-  //       console.log(state);
-  //       setLoading(false);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchPost();
-
-  //   const fetchComment = async () => {
-  //     const response = await axios.get('/api/comment', {
-  //       params: { postId },
-  //     });
-  //     setLoading(true);
-  //     try {
-  //       setComments(response.data);
-  //       setLoading(false);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchComment();
-  // }, [postId]);
-
   if (loading) return null;
   if (!post) return null;
 

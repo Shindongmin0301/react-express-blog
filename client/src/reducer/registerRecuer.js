@@ -7,26 +7,23 @@ const message = {
   confirmPasswordHelp: '비밀번호가 서로 달라요. 다시 확인 해주세요.',
   passwordHelp: '비밀번호는 영어,숫자,특수문자로 8~30자 안으로 정해주세요.',
   nicknameHelp: '닉네임은 한글,영어 또는 숫자로 2~16자 안으로 정해주세요.',
+  nicknameAlreadyExist: '이미 존재하는 닉네임입니다.',
   emptyInputErr: '빈칸을 채워주세요.',
 };
 
 const registerReducer = (state, action) => {
   switch (action.type) {
-    case 'initailizeState':
-      return produce(state, draft => {
-        Object.keys(draft).forEach(key => {
-          draft[key].helpMessage = null;
-        });
-      });
-
     case 'onChange':
       return produce(state, draft => {
-        Object.keys(draft).forEach(key => {
-          draft[key].helpMessage = null;
-          draft[key].isPass = false;
-        });
-
         draft[action.name].value = action.value;
+
+        Object.keys(draft).forEach(key => {
+          // 비밀번호, 비밀번호 확인란을 제외한 input은 onChange시 state 초기화
+          if ((action.name === draft[key].name && action.name !== draft.password) || draft.confirmPassword) {
+            draft[key].helpMessage = null;
+            draft[key].isPass = false;
+          }
+        });
 
         const idTest = checkRegExp.id(draft.id.value);
         const passwordTest = checkRegExp.password(draft.password.value);
@@ -52,7 +49,7 @@ const registerReducer = (state, action) => {
         // password comfirm
         if (draft.password.value !== draft.confirmPassword.value && draft.confirmPassword.value.length > 0) {
           draft.confirmPassword.helpMessage = message.confirmPasswordHelp;
-        } else if (draft.password.value === draft.confirmPassword.value) {
+        } else if (draft.password.value === draft.confirmPassword.value && draft.confirmPassword.value !== '') {
           draft.confirmPassword.isPass = true;
         } else {
           draft.confirmPassword.helpMessage = null;
@@ -67,6 +64,18 @@ const registerReducer = (state, action) => {
         } else {
           draft.nickname.helpMessage = null;
         }
+      });
+
+    case 'AlreadyExistId':
+      return produce(state, draft => {
+        draft.id.helpMessage = message.idAlreayExist;
+        draft.id.isPass = false;
+      });
+
+    case 'AlreadyExistNickname':
+      return produce(state, draft => {
+        draft.nickname.helpMessage = message.nicknameAlreadyExist;
+        draft.nickname.isPass = false;
       });
   }
 };

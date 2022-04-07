@@ -3,19 +3,45 @@ const db = require('../config/db');
 class PostStorage {
   static selectPostRecords() {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM posts', (err, data) => {
-        if (err) reject(err);
-        else resolve(data);
-      });
+      db.query(
+        `SELECT 
+            posts.post_id,
+            posts.title,
+            posts.content,
+            posts.author,
+            users.nickname
+         FROM
+            posts
+                JOIN
+            users ON posts.author = users.user_id;`,
+        (err, data) => {
+          if (err) reject(err);
+          else resolve(data);
+        },
+      );
     });
   }
 
   static selectPostRecord(id) {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM posts WHERE post_id=?', [id], (err, data) => {
-        if (err) reject(err);
-        else resolve(data[0]);
-      });
+      db.query(
+        `
+         SELECT 
+            posts.post_id,
+            posts.title,
+            posts.content,
+            posts.author,
+            users.nickname
+         FROM
+            posts
+               JOIN
+            users ON posts.author = users.user_id AND posts.post_id = ?;`,
+        [id],
+        (err, data) => {
+          if (err) reject(err);
+          else resolve(data[0]);
+        },
+      );
     });
   }
 
