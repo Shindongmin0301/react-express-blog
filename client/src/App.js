@@ -5,7 +5,7 @@ import { PostProvider } from './contexts/PostContext';
 import axios from 'axios';
 
 import Layout from './Components/Layout';
-import PopularList from './pages/PopularList';
+import PostList from './pages/PostList';
 import PostContent from './pages/PostContent';
 import Write from './pages/Write';
 import Update from './pages/Update';
@@ -32,7 +32,7 @@ const App = () => {
       <PostProvider>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<PopularList />} />
+            <Route path="/" element={<PostList />} />
             <Route path="/post-content/:id" element={<PostContent />} />
             <Route path="/post/write" element={<Write />} />
             <Route path="/post/update/:id" element={<Update />} />

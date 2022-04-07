@@ -17,7 +17,6 @@ const PostOptions = ({ postAuthor, postId }) => {
   const handleDelete = () => {
     const result = window.confirm('게시글 정말 삭제 하시나요?');
     if (!result) return;
-
     axios({ method: 'DELETE', url: '/api/post/delete', data: { postAuthor, postId } }).then(({ data }) => {
       if (data.success) {
         alert('게시글 삭제완료!');
@@ -25,6 +24,7 @@ const PostOptions = ({ postAuthor, postId }) => {
       }
     });
   };
+
   return (
     <div>
       <Btn onClick={() => navigate(`/post/update/${postId}`)}>수정</Btn>

@@ -1,16 +1,20 @@
-import './PopularPost.scss';
+import '../styles/PostList.scss';
 import { useNavigate } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import PostContext from '../contexts/PostContext';
+import { Container } from '../Components/common/Container';
 
-const PopularPost = () => {
+const PostList = () => {
+  const navigate = useNavigate();
+
   const { state, actions } = useContext(PostContext);
   const [loading, setLoading] = useState(false);
   const posts = state.posts;
 
   useEffect(() => {
+    // 포스트 로딩 비동기 함수
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -18,7 +22,8 @@ const PopularPost = () => {
         actions.setPosts(response.data);
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        alert('일시적인 오류가 발생했습니다.');
+        navigate('/');
       }
     };
     fetchData();
@@ -28,7 +33,7 @@ const PopularPost = () => {
   if (!posts) return null;
   return (
     <div>
-      <div className="page-container mt-5">
+      <Container className="mt-5">
         <div className="row">
           {posts.map(post => {
             return (
@@ -43,7 +48,7 @@ const PopularPost = () => {
             );
           })}
         </div>
-      </div>
+      </Container>
     </div>
   );
 };
@@ -68,4 +73,4 @@ const PopularPostItem = ({ id, title, nickname, author }) => {
   );
 };
 
-export default PopularPost;
+export default PostList;
