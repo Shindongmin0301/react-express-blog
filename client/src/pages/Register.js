@@ -7,7 +7,6 @@ import Input from '../Components/common/Input';
 import palette from '../lib/styles';
 import registerReducer from '../reducer/registerRecuer';
 import { BsCheckLg } from 'react-icons/bs';
-import produce from 'immer';
 import { useNavigate } from 'react-router-dom';
 
 const StyledRegisterBlock = styled.div`

@@ -1,41 +1,11 @@
 import '../styles/LoginForm.scss';
-import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserContext from '../contexts/UserContext';
 import { CgClose } from 'react-icons/cg';
-import axios from 'axios';
+import useLogin from '../hooks/useLogin';
 
 const Login = ({ closeLoginForm }) => {
-  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const [id, setId] = useState(null);
-  const [password, setPassword] = useState(null);
-
-  const onChange = e => {
-    switch (e.target.name) {
-      case 'id':
-        return setId(e.target.value);
-      case 'password':
-        return setPassword(e.target.value);
-    }
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    axios({
-      method: 'post',
-      url: '/api/login',
-      data: {
-        id,
-        password,
-      },
-    }).then(({ data }) => {
-      if (data.success) {
-        setUser(data.userInfo);
-        closeLoginForm();
-      } else return alert("That's not correct info");
-    });
-  };
+  const { onChange, onSubmit } = useLogin(closeLoginForm);
 
   return (
     <div className="container-fluid login-wrap">

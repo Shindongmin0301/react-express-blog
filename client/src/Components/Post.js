@@ -1,8 +1,26 @@
 import './Post.scss';
+import useApi from '../hooks/useApi';
+import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
 import PostOptions from './PostOptions';
+import PostContext from '../contexts/PostContext';
 
-const Post = ({ post, user }) => {
+const Post = () => {
+  const { user } = useContext(UserContext);
+  const { state, actions } = useContext(PostContext);
+  console.log(state);
+  const postId = useParams().id;
+  const postFetch = {
+    url: '/api/post-one',
+    params: { postId },
+  };
+
+  const { data: post, loading, err } = useApi(postFetch);
+  if (loading) return null;
+  if (!post) return null;
+
   return (
     <>
       <div className="content_wrap mt-5">

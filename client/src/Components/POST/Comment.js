@@ -1,9 +1,10 @@
 import './Comment.scss';
-import React, { useState, useMemo } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
-import timeDiffCalc from '../../lib/timeDiffCalc';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useApi from '../../hooks/useApi';
+import styled from 'styled-components';
+import timeDiffCalc from '../../lib/timeDiffCalc';
+import useComments from '../../hooks/useComments';
 
 const Img = styled.img`
   width: 54px;
@@ -45,34 +46,29 @@ const Button = styled.button`
   }
 `;
 
-const Comment = ({ comments, setComments }) => {
-  const postId = useParams().id;
+const Comment = () => {
+  const [comments, setComments] = useState(null);
   const [commentInput, setCommentInput] = useState('');
-  const [commentsLength] = useState(comments.length);
+  const postId = useParams().id;
 
-  const onSubmit = e => {
-    e.preventDefault();
-    axios({
-      url: '/api/comment/add',
-      method: 'POST',
-      data: {
-        commentInput,
-        postId,
-      },
-    }).then(({ data }) => {
-      if (data.success) {
-        axios.get('/api/comment', { params: { postId } }).then(({ data }) => {
-          setComments(data);
-          setCommentInput('');
-        });
-      }
-    });
+  const fetch = {
+    url: '/api/comments',
+    params: { postId },
   };
+  const { data, loading, error } = useApi(fetch);
+  const { onSubmit } = useComments(postId, commentInput, setCommentInput, comments, setComments);
 
+  useEffect(() => {
+    setComments(data);
+  }, [fetch]);
+  if (loading) return null;
+  if (!comments) return null;
+
+  console.log(comments);
   return (
     <CommnetWrap>
       <div className="position-relative comment__input">
-        <div>{commentsLength}개의 댓글</div>
+        <div>{comments.length}개의 댓글</div>
         <form onSubmit={onSubmit}>
           <Textarea
             placeholder="댓글을 입력해 보세요."
