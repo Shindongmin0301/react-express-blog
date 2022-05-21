@@ -19,6 +19,21 @@
             "date": 1645752737769,
             "name": "logs/2022-02-25.log",
             "hash": "42abdbe6706d97f804b69e680ee81456"
+        },
+        {
+            "date": 1646121278836,
+            "name": "logs/2022-03-01.log",
+            "hash": "93bf006b18a0cb6dace1b5eec398a4b7"
+        },
+        {
+            "date": 1646183205458,
+            "name": "logs/2022-03-02.log",
+            "hash": "939bf5b501918c826e1b3c115dac69e6"
+        },
+        {
+            "date": 1653116936677,
+            "name": "logs/2022-05-21.log",
+            "hash": "bb6948eac592648af761376b3e982beb"
         }
     ],
     "hashType": "md5"
